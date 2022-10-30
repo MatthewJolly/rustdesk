@@ -22,6 +22,10 @@ body {
     size: *;
 }
 
+.user {
+
+}
+
 .lighter-text {
     color: color(lighter-text);
     font-size: 0.9em;

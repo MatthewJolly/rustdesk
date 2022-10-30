@@ -769,6 +769,10 @@ pub fn default_video_save_directory() -> String {
 pub fn is_xfce() -> bool {
     crate::platform::is_xfce()
 }
+#[inline]
+pub fn is_admin() -> bool {
+    crate::platform::is_admin()
+}
 
 #[inline]
 pub fn get_api_server() -> String {

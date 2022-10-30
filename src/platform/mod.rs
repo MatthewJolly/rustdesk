@@ -37,6 +37,16 @@ pub fn is_xfce() -> bool {
     }
 }
 
+pub fn is_admin() -> bool {
+    #[cfg(admin)]
+    {
+        return true;
+    }
+    {
+        return false;
+    }
+}
+
 // Android
 #[cfg(target_os = "android")]
 pub fn get_active_username() -> String {

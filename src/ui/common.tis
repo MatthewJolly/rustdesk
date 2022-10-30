@@ -9,6 +9,8 @@ var is_linux = OS == "Linux";
 var is_file_transfer;
 var is_xfce = false;
 try { is_xfce = handler.is_xfce(); } catch(e) {}
+var is_admin = false;
+try { is_admin = handler.is_admin(); } catch(e) {}
 
 function isEnterKey(evt) {
     return (evt.keyCode == Event.VK_ENTER || 

@@ -100,7 +100,13 @@ fn gen_flutter_rust_bridge() {
     lib_flutter_rust_bridge_codegen::frb_codegen(opts).unwrap();
 }
 
+
+
 fn main() {
+
+    if std::env::var("PROFILE").unwrap() == "release" {
+        println!("cargo:rustc-cfg=admin");
+    }
     hbb_common::gen_version();
     install_oboe();
     // there is problem with cfg(target_os) in build.rs, so use our workaround

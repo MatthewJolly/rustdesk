@@ -334,6 +334,7 @@ impl sciter::EventHandler for SciterSession {
         fn get_audit_server();
         fn send_note(String);
         fn is_xfce();
+        fn is_admin();
         fn get_id();
         fn get_default_pi();
         fn get_option(String);

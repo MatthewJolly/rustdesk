@@ -216,6 +216,10 @@ impl<T: InvokeUiSession> Session<T> {
 
     pub fn is_xfce(&self) -> bool {
         crate::platform::is_xfce()
+    }    
+    
+    pub fn is_admin(&self) -> bool {
+        crate::platform::is_admin()
     }
 
     pub fn remove_port_forward(&self, port: i32) {

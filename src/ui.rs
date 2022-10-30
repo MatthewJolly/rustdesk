@@ -556,6 +556,10 @@ impl UI {
 
     fn is_xfce(&self) -> bool {
         is_xfce()
+    }    
+    
+    fn is_admin(&self) -> bool {
+        is_admin()
     }
 
     fn get_api_server(&self) -> String {
@@ -580,6 +584,7 @@ impl sciter::EventHandler for UI {
         fn t(String);
         fn get_api_server();
         fn is_xfce();
+        fn is_admin();
         fn using_public_server();
         fn get_id();
         fn temporary_password();

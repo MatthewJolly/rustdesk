@@ -6,6 +6,7 @@ stdout.println("is_xfce: ", is_xfce);
 view.windowMinSize = (scaleIt(560), scaleIt(300));
 
 var app;
+var admin_view;
 var tmp = handler.get_connect_status();
 var connect_status = tmp[0];
 var service_stopped = handler.get_option("stop-service") == "Y";
@@ -47,7 +48,7 @@ class ConnectStatus: Reactor.Component {
             return translate('connecting_status');
         }
         if (!handler.using_public_server()) return translate('Ready');
-        return <span>{translate("Ready")}, <span .link #setup-server>{translate("setup_server_tip")}</span></span>;
+        return <span>{translate("Ready")}</span>;
     }
 
     event click $(#start-service) () {
@@ -61,7 +62,7 @@ class ConnectStatus: Reactor.Component {
 
 function createNewConnect(id, type) {
     id = id.replace(/\s/g, "");
-    app.remote_id.value = formatId(id);
+    admin_view.remote_id.value = formatId(id);
     if (!id) return;
     if (id == my_id) {
         msgbox("custom-error", "Error", "You cannot connect to your own computer");
@@ -267,7 +268,7 @@ function getUserName() {
 
 function updateTheme() {
     var root_element = self;
-    if (handler.get_option("allow-darktheme") == "Y") {
+    if (true) { //handler.get_option("allow-darktheme") == "Y") {
         // enable dark theme
         root_element.attributes.toggleClass("darktheme", true);
     } else {
@@ -554,7 +555,7 @@ class App: Reactor.Component
                         </div>
                         <PasswordArea />
                     </div>
-                    {!is_win || handler.is_installed() ? "": <InstallMe />}
+                    {true || !is_win || handler.is_installed() ? "": <InstallMe />}
                     {software_update_url ? <UpdateMe /> : ""}
                     {is_win && handler.is_installed() && !software_update_url && handler.is_installed_lower_version() ? <UpgradeMe /> : ""}
                     {is_can_screen_recording ? "": <CanScreenRecording />}
@@ -564,24 +565,35 @@ class App: Reactor.Component
                     {!system_error && handler.is_login_wayland() && !handler.current_is_wayland() ? <FixWayland /> : ""}
                     {!system_error && handler.current_is_wayland() ? <ModifyDefaultLogin /> : ""}
                 </div>
+                
                 <div .right-pane>
                     <div .right-content>
-                        <div .card-connect>
-                            <div .title>{translate('Control Remote Desktop')}</div>
-                            <ID @{this.remote_id} />
-                            <div .right-buttons>
-                                <button .button .outline #file-transfer>{translate('Transfer File')}</button>
-                                <button .button #connect>{translate('Connect')}</button>
-                            </div>
-                        </div>
-                        <MultipleSessions @{this.multipleSessions} />
+                    { is_admin ? <AdminView /> : <UserView /> }
                     </div>
                     <ConnectStatus @{this.connect_status} />
                 </div>
                 <div #overlay style="position: absolute;size:*;background:black;opacity:0.5;display:none" />
             </div>;
     }
+}
 
+class AdminView: Reactor.Component {
+    function this() {
+        admin_view = this;
+    }
+    function render() {
+        return <div .admin>
+            <div .card-connect>
+                <div .title>{translate('Control Remote Desktop')}</div>
+                <ID @{this.remote_id} />
+                <div .right-buttons>
+                    <button .button .outline #file-transfer>{translate('Transfer File')}</button>
+                    <button .button #connect>{translate('Connect')}</button>
+                </div>
+            </div>
+            <MultipleSessions @{this.multipleSessions} />
+        </div>;
+    }
     event click $(button#connect) {
         this.newRemote("connect");
     }
@@ -592,6 +604,20 @@ class App: Reactor.Component
 
     function newRemote(type) {
         createNewConnect(this.remote_id.value, type);
+    }
+}
+class UserView: Reactor.Component {
+    function render() {
+        return <div .user>
+            <div .card-connect>
+                <div .title>Polaris Remote Support Session</div>
+                <div>
+                    <span>Please provide the Polaris support tech with the numbers below.</span><p />
+                    {key_confirmed ? <input type="text" readonly value={formatId(get_id())}/> : translate("Generating ...")}
+                </div>
+            </div>
+            <img src="support.svg" />
+        </div>;
     }
 }
 
