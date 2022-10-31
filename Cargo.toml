@@ -1,12 +1,12 @@
 cargo-features = ["profile-rustflags"]
 [package]
-name = "rustdesk"
+name = "remote"
 version = "1.2.0"
-authors = ["rustdesk <info@rustdesk.com>"]
+authors = ["CWTG <support@cwtg.com>"]
 edition = "2021"
 build= "build.rs"
 description = "A remote control software."
-default-run = "rustdesk"
+default-run = "remote"
 
 [lib]
 name = "librustdesk"
@@ -27,7 +27,7 @@ use_samplerate = ["samplerate"]
 use_rubato = ["rubato"]
 use_dasp = ["dasp"]
 flutter = ["flutter_rust_bridge"]
-default = ["use_dasp"]
+default = ["use_dasp", "inline"]
 hwcodec = ["scrap/hwcodec"]
 mediacodec = ["scrap/mediacodec"]
 
@@ -162,4 +162,8 @@ strip = true
 
 [profile.admindev]
 inherits = "dev"
+rustflags = ["--cfg", "admin"]
+
+[profile.adminrel]
+inherits = "release"
 rustflags = ["--cfg", "admin"]

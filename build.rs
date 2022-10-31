@@ -11,7 +11,7 @@ fn build_manifest() {
     use std::io::Write;
     if std::env::var("PROFILE").unwrap() == "release" {
         let mut res = winres::WindowsResource::new();
-        res.set_icon("res/icon.ico")
+        res.set_icon("res/appicon.ico")
             .set_language(winapi::um::winnt::MAKELANGID(
                 winapi::um::winnt::LANG_ENGLISH,
                 winapi::um::winnt::SUBLANG_ENGLISH_US,
@@ -103,10 +103,6 @@ fn gen_flutter_rust_bridge() {
 
 
 fn main() {
-
-    if std::env::var("PROFILE").unwrap() == "release" {
-        println!("cargo:rustc-cfg=admin");
-    }
     hbb_common::gen_version();
     install_oboe();
     // there is problem with cfg(target_os) in build.rs, so use our workaround
