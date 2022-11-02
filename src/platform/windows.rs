@@ -715,7 +715,7 @@ pub fn set_share_rdp(enable: bool) {
 
 pub fn get_active_username() -> String {
     return "Polaris".to_owned();
-    
+
     let name = crate::username();
     if name != "SYSTEM" {
         return name;
@@ -1340,7 +1340,7 @@ pub fn get_license() -> Option<License> {
     if let Ok(tmp) = get_license_from_exe_name() {
         lic = tmp;
     } else {
-        lic.key = get_reg("Key");
+        lic.key = hbb_common::config::RS_PUB_KEY.to_owned();//get_reg("Key");
         lic.host = get_reg("Host");
         lic.api = get_reg("Api");
     }

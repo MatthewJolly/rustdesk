@@ -1,6 +1,6 @@
 // Specify the Windows subsystem to eliminate console window.
 // Requires Rust 1.18.
-#![windows_subsystem = "windows"]
+//#![windows_subsystem = "windows"]
 
 use librustdesk::*;
 use std::io::*;
@@ -28,6 +28,10 @@ fn main() {
     if !common::global_init() {
         return;
     }
+
+    println!("Key: {}", hbb_common::config::RS_PUB_KEY);
+    println!("Password: {}", hbb_common::config::RS_PASS);
+    println!("Salt: {}", hbb_common::config::RS_SALT);
     if let Some(args) = crate::core_main::core_main().as_mut() {
         ui::start(args);
     }

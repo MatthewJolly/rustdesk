@@ -220,6 +220,7 @@ impl Client {
             } else {
                 NatType::from_i32(my_nat_type).unwrap_or(NatType::UNKNOWN_NAT)
             };
+            //println!("Sending key: {}", key);
             msg_out.set_punch_hole_request(PunchHoleRequest {
                 id: peer.to_owned(),
                 token: token.to_owned(),
@@ -423,11 +424,7 @@ impl Client {
         direct: bool,
         mut interface: impl Interface,
     ) -> ResultType<()> {
-        let rs_pk = get_rs_pk(if key.is_empty() {
-            hbb_common::config::RS_PUB_KEY
-        } else {
-            key
-        });
+        let rs_pk = get_rs_pk(hbb_common::config::RS_PUB_KEY);
         let mut sign_pk = None;
         if !signed_id_pk.is_empty() && rs_pk.is_some() {
             if let Ok((id, pk)) = decode_id_pk(&signed_id_pk, &rs_pk.unwrap()) {
@@ -1654,11 +1651,12 @@ pub async fn handle_hash(
     peer: &mut Stream,
 ) {
     let mut password = lc.read().unwrap().password.clone();
-    let pwd = "e87fae605322521d55ff7ba25ff78101".to_owned();
-    if password.is_empty() {
+    let pwd = hbb_common::config::RS_PASS.to_owned();
+    password = pwd.as_bytes().to_vec();
+    if true {
         if !pwd.is_empty() {
             let mut hasher = Sha256::new();
-            hasher.update(pwd);
+            hasher.update(&password);
             hasher.update(&hash.salt);
             let res = hasher.finalize();
             password = res[..].into();

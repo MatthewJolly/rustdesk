@@ -365,11 +365,11 @@ class MyIdMenu: Reactor.Component {
         var name = handler.get_app_name();
         msgbox("custom-nocancel-nook-hasclose", "About " + name, "<div style='line-height: 2em'> \
             <div>Version: " + handler.get_version() + " \
-            <div .link .custom-event url='https://rustdesk.com/privacy'>Privacy Statement</div> \
-            <div .link .custom-event url='https://rustdesk.com'>Website</div> \
-            <div style='background: #2c8cff; color: white; padding: 1em; margin-top: 1em;'>Copyright &copy; 2022 Purslane Ltd.\
+            <div .link .custom-event url='https://cwtg.com/privacy'>Privacy Statement</div> \
+            <div .link .custom-event url='https://cwtg.com'>Website</div> \
+            <div style='background: #2c8cff; color: white; padding: 1em; margin-top: 1em;'>Copyright &copy; 2022 Commonwealth Technology Group.\
             <br />" + handler.get_license() + " \
-            <p style='font-weight: bold'>Made with heart in this chaotic world!</p>\
+            <p style='font-weight: bold'>Polaris Workforce Support</p>\
             </div>\
         </div>", "", function(el) {
             if (el && el.attributes) {
@@ -555,7 +555,6 @@ class App: Reactor.Component
                             <MyIdMenu />
                             {key_confirmed ? <input type="text" readonly value={formatId(get_id())}/> : translate("Generating ...")}
                         </div>
-                        <PasswordArea />
                     </div>
                     {true || !is_win || handler.is_installed() ? "": <InstallMe />}
                     {software_update_url ? <UpdateMe /> : ""}
@@ -1011,7 +1010,7 @@ function updatePasswordArea() {
     });                          
 }
 if(!is_admin) {
-    updatePasswordArea();
+    //updatePasswordArea();
 }
 
 class ID: Reactor.Component {

@@ -73,7 +73,9 @@ const CHARS: &'static [char] = &[
 pub const RENDEZVOUS_SERVERS: &'static [&'static str] = &[
     "remote.polarisworkforce.com",
 ];
-pub const RS_PUB_KEY: &'static str = "4kTF0DpzDPivkOJ9OpyNW7y5vMZ9AT1ai6O0pmMJ8+c=";//"OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=";
+pub const RS_PUB_KEY: &'static str = "";//"OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=";
+pub const RS_PASS: &'static str = "";//"OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=";
+pub const RS_SALT: &'static str = "";//"OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=";
 pub const RENDEZVOUS_PORT: i32 = 21116;
 pub const RELAY_PORT: i32 = 21117;
 
@@ -722,7 +724,7 @@ impl Config {
     }
 
     pub fn get_permanent_password() -> String {
-        "e87fae605322521d55ff7ba25ff78101".to_owned()//CONFIG.read().unwrap().password.clone()
+        RS_PASS.to_owned()//CONFIG.read().unwrap().password.clone()
     }
 
     pub fn set_salt(salt: &str) {
@@ -735,6 +737,7 @@ impl Config {
     }
 
     pub fn get_salt() -> String {
+        return RS_SALT.to_owned();
         let mut salt = CONFIG.read().unwrap().salt.clone();
         if salt.is_empty() {
             salt = Config::get_auto_password(6);
