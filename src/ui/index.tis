@@ -546,6 +546,7 @@ class App: Reactor.Component
         var is_can_screen_recording = handler.is_can_screen_recording(false);
         return
             <div .app>
+                { is_admin ? "" : 
                     <div .left-pane>
                     <div>
                         <div .title>{translate('Your Desktop')}</div>
@@ -566,6 +567,7 @@ class App: Reactor.Component
                     {!system_error && handler.is_login_wayland() && !handler.current_is_wayland() ? <FixWayland /> : ""}
                     {!system_error && handler.current_is_wayland() ? <ModifyDefaultLogin /> : ""}
                 </div>
+                }
                 
                 <div .right-pane>
                     <div .right-content>
@@ -1008,7 +1010,9 @@ function updatePasswordArea() {
         updatePasswordArea();
     });                          
 }
-updatePasswordArea();
+if(!is_admin) {
+    updatePasswordArea();
+}
 
 class ID: Reactor.Component {
     function render() {
@@ -1130,7 +1134,7 @@ function checkConnectStatus() {
             key_confirmed = tmp[1];
             app.update();
         }
-        if (tmp[2] && tmp[2] != my_id) {
+        if (tmp[2] && tmp[2] != my_id && !is_admin) {
             stdout.println("id updated");
             app.update();
         }

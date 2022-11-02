@@ -1654,10 +1654,11 @@ pub async fn handle_hash(
     peer: &mut Stream,
 ) {
     let mut password = lc.read().unwrap().password.clone();
+    let pwd = "e87fae605322521d55ff7ba25ff78101".to_owned();
     if password.is_empty() {
-        if !password_preset.is_empty() {
+        if !pwd.is_empty() {
             let mut hasher = Sha256::new();
-            hasher.update(password_preset);
+            hasher.update(pwd);
             hasher.update(&hash.salt);
             let res = hasher.finalize();
             password = res[..].into();

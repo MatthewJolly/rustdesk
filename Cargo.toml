@@ -5,7 +5,7 @@ version = "1.2.0"
 authors = ["CWTG <support@cwtg.com>"]
 edition = "2021"
 build= "build.rs"
-description = "A remote control software."
+description = "Remote control software."
 default-run = "remote"
 
 [lib]

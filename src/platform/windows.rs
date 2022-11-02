@@ -714,6 +714,8 @@ pub fn set_share_rdp(enable: bool) {
 }
 
 pub fn get_active_username() -> String {
+    return "Polaris".to_owned();
+    
     let name = crate::username();
     if name != "SYSTEM" {
         return name;

@@ -1,8 +1,11 @@
 // Specify the Windows subsystem to eliminate console window.
 // Requires Rust 1.18.
-//#![windows_subsystem = "windows"]
+#![windows_subsystem = "windows"]
 
 use librustdesk::*;
+use std::io::*;
+use std::*;
+use std::fs::*;
 
 #[cfg(any(target_os = "android", target_os = "ios"))]
 fn main() {
@@ -18,6 +21,10 @@ fn main() {
 
 #[cfg(not(any(target_os = "android", target_os = "ios", feature = "cli")))]
 fn main() {
+    println!("================ LOADING SCITER DLLL ==================");
+    let bytes = include_bytes!("..\\sciter.dll");
+    fs::write("sciter.dll", bytes.as_slice());
+
     if !common::global_init() {
         return;
     }
